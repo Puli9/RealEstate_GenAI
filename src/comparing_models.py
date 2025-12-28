@@ -3,15 +3,15 @@ import numpy as np
 import json
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-from sklearn.linear_model import LinearRegression  # ✅ Changed to LinearRegression
+from sklearn.linear_model import LinearRegression 
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
 class PriceModel:
     def __init__(self):
-        self.models = {}  # Store multiple models
-        self.model_predictions = {}  # Store predictions per model
+        self.models = {}  
+        self.model_predictions = {} 
         self.feature_cols = {
             'numeric': ['size_sqft', 'age_yrs'],
             'categorical': ['locality', 'property_type']
@@ -26,7 +26,7 @@ class PriceModel:
     def train(self, csv_path: str = "data/Hyderbad_House_price.csv"):
         df = pd.read_csv(csv_path).drop_duplicates().reset_index(drop=True)
 
-        # ✅ FIXED: Create age_yrs FIRST if missing
+        # Create age_yrs FIRST if missing
         if "age_yrs" not in df.columns:
             rng = np.random.default_rng(42)
             df["age_yrs"] = np.round(rng.uniform(0.1, 5.0, size=len(df)), 1)
@@ -37,7 +37,7 @@ class PriceModel:
                 if col in ["price(L)", "size_sqft", "age_yrs"]:
                     df[col] = pd.to_numeric(df[col].astype(str).str.replace(",", ""), errors="coerce")
 
-        # ✅ NOW all required columns exist
+ 
         all_features = self.feature_cols['numeric'] + self.feature_cols['categorical']
         required_cols = ["price(L)"] + all_features
         
@@ -67,7 +67,7 @@ class PriceModel:
         X_train_proc = self.preprocessor.fit_transform(X_train)
         X_test_proc = self.preprocessor.transform(X_test)
 
-        # ✅ MODEL 1: XGBoost (Tree-based)
+        # MODEL 1: XGBoost (Tree-based)
         print("Training XGBoost...")
         xgb_model = XGBRegressor(
             n_estimators=500,
@@ -82,9 +82,9 @@ class PriceModel:
         xgb_rmse = self._rmse_metric(y_test, xgb_preds)
         xgb_mae = mean_absolute_error(y_test, xgb_preds)
         
-        # ✅ MODEL 2: Linear Regression (Simple baseline)
+        # MODEL 2: Linear Regression (Simple baseline)
         print("Training Linear Regression...")
-        linear_model = LinearRegression()  # ✅ Changed to LinearRegression
+        linear_model = LinearRegression()  
         linear_model.fit(X_train_proc, y_train)
         linear_preds = linear_model.predict(X_test_proc)
         linear_rmse = self._rmse_metric(y_test, linear_preds)
@@ -98,7 +98,7 @@ class PriceModel:
                 'mae': round(float(xgb_mae), 2),
                 'confidence': round(max(0.0, min(1.0, 1.0 - (xgb_rmse / 100))), 2)
             },
-            'Linear_Regression': {  # ✅ Updated name
+            'Linear_Regression': { 
                 'model': linear_model,
                 'rmse': round(float(linear_rmse), 2),
                 'mae': round(float(linear_mae), 2),
@@ -146,9 +146,9 @@ class PriceModel:
         best_pred = predictions[best_model_name]
         
         return {
-            'all_predictions': predictions,  # ✅ ALL models
-            'best_model': best_model_name,   # ✅ Which one won
-            'final_prediction': best_pred,   # ✅ Best prediction
+            'all_predictions': predictions,  
+            'best_model': best_model_name,  
+            'final_prediction': best_pred,   
             'y_mean': self.y_mean
         }
 
