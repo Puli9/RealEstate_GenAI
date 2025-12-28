@@ -1,0 +1,100 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# PyInstaller - Temporary files
+PyInstaller/
+build/
+dist/
+*.app
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Logs & Databases
+*.log
+logs/
+*.sqlite3
+chroma.sqlite3
+data/vector_store/
+data/__pycache__/
+
+# Environment Variables (CRITICAL!)
+.env
+.env.local
+.env.*.local
+
+# ML Models & Cache
+models/
+*.pkl
+*.joblib
+cache/
+checkpoints/
+
+# Data (Keep raw data, ignore processed)
+data/*.csv_processed
+data/*.parquet
+data/__pycache__/
+
+# Temp files
+*.tmp
+*.temp
+temp/
+
+# Dependency directories
+node_modules/
+
+# Project-specific exclusions
+data/vector_store/
+!.gitignore

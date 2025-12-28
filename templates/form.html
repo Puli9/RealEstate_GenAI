@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Real Estate Investment Assistant</title>
+</head>
+<body>
+  <h2>Property details</h2>
+  <form method="post">
+
+    <label>City:</label>
+    <input type="text" name="city" value="Hyderabad" required /><br/>
+
+    <label>Locality:</label>
+    <input type="text" name="locality" value="Madhapur" required /><br/>
+
+    <label>Property type:</label>
+    <input type="text" name="property_type" value="Apartment" required /><br/>
+
+    <label>Size (sqft):</label>
+    <input type="number" step="1" name="size_sqft" value="1200" required /><br/>
+
+    <label>Age (years):</label>
+    <input type="number" step="0.1" name="age_yrs" value="3.5" required /><br/>
+
+    <h3>User investment context</h3>
+    <textarea name="user_ctx" rows="3" cols="60"
+      placeholder="e.g., Long-term rental investor (8+ years), moderate risk tolerance."
+    >Long-term rental investor (8+ years), moderate risk tolerance.</textarea><br/>
+
+    <button type="submit">Analyze Investment</button>
+  </form>
+
+  {% if narrative %}
+    <h2>Investment explanation</h2>
+    <p><strong>View:</strong> {{ narrative.investment_view }}</p>
+    <p><strong>Summary:</strong> {{ narrative.summary }}</p>
+
+    <h3>Drivers</h3>
+    <ul>
+      {% for d in narrative.drivers %}
+      <li>{{ d }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Risks</h3>
+    <ul>
+      {% for r in narrative.risks %}
+      <li>{{ r }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Assumptions</h3>
+    <ul>
+      {% for a in narrative.assumptions %}
+      <li>{{ a }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Model prediction</h3>
+    <p>
+      Predicted price: {{ prediction.predicted_price_L }} L<br/>
+      RMSE: {{ prediction.rmse }}<br/>
+      Confidence: {{ prediction.confidence }}
+    </p>
+  {% endif %}
+</body>
+</html>
